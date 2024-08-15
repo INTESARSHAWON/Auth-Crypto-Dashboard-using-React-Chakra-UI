@@ -1,6 +1,16 @@
-import { Card, Center, Container, FormControl, Stack, Text, FormLabel, Input, Flex, Checkbox, Button } from "@chakra-ui/react"
+import { Card, Center, Container, FormControl, Stack, Text, FormLabel, Input, Flex, Checkbox, Button, FormErrorMessage } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { Formik, Form, Field } from "formik";
+import { object, string, ref } from 'yup';
+
+const signupValidationSchema = object({
+    name: string().required("Name is required"),
+    surname: string().required("Surname is required"),
+    email: string().email("Email is invalid").required("Email is required"),
+    password: string().min(6, "Password must be atleast 6 characters").required("Password is required"),
+    confirmPassword: string().oneOf([ref("password"), null],"Passwords must match").required("Confirm your Password"),
+});
+
 
 const Signup = () => {
   return (
@@ -10,7 +20,7 @@ const Signup = () => {
                 p="6"
                 borderRadius="1rem"
                 w="456px">
-                <Text textStyle="h1">Welcome to Crypto App</Text>
+                <Text fontWeight="medium" textStyle="h1">Welcome to Crypto App</Text>
                 <Text textStyle="p2" color="black.60" mt="4">Create a free account by filling data below</Text>
                 <Formik
                     initialValues={{
@@ -24,6 +34,7 @@ const Signup = () => {
                     onSubmit={(values) => {
                             console.log (values);
                         }}
+                    validationSchema={signupValidationSchema}
                     >
                     {()=>(
                     <Form>
@@ -36,6 +47,7 @@ const Signup = () => {
                                         <Input 
                                         {...field} 
                                         name="name" placeholder="Enter your Name......."/>
+                                        <FormErrorMessage>{meta.error}</FormErrorMessage>
                                     </FormControl>
                                     )}
                                 </Field>
@@ -46,6 +58,7 @@ const Signup = () => {
                                         <Input 
                                         {...field}
                                         name="surname" placeholder="Enter your Surname......."/>
+                                        <FormErrorMessage>{meta.error}</FormErrorMessage>
                                     </FormControl>
                                     )}
                                 </Field>    
@@ -57,6 +70,7 @@ const Signup = () => {
                                         <Input 
                                         {...field}
                                         name="email" type="email" placeholder="Enter your Email......."/>
+                                        <FormErrorMessage>{meta.error}</FormErrorMessage>
                                 </FormControl>
                                     )}
                             </Field>
@@ -67,6 +81,7 @@ const Signup = () => {
                                         <Input 
                                         {...field}
                                         name="password" type="password" placeholder="Type your Password......."/>
+                                        <FormErrorMessage>{meta.error}</FormErrorMessage>
                                 </FormControl>
                                     )}
                             </Field>
@@ -77,6 +92,7 @@ const Signup = () => {
                                     <Input 
                                     {...field}
                                     name="confirmPassword" type="password" placeholder="Re-Type your Password......."/>
+                                    <FormErrorMessage>{meta.error}</FormErrorMessage>
                                 </FormControl>
                                     )}
                             </Field>
