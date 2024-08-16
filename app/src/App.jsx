@@ -5,7 +5,7 @@ import Signin from "./pages/Auth/Signin/Signin";
 import Support from "./pages/Support/Support";
 import TransactionPage from "./pages/Transaction/Transaction";
 import RegisterEmailVerify from "./pages/Auth/RegisterEmailVerify/RegisterEmailVerify";
-
+import RegisterSuccess from "./pages/Auth/RegisterSuccess/RegisterSuccess";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/register-email-verify",
     element: <RegisterEmailVerify />,
+  },
+  {
+    path: "/register-success",
+    element: <RegisterSuccess />,
   },
 ]);
 
