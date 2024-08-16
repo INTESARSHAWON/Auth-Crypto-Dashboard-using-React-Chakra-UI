@@ -1,9 +1,90 @@
+import { Center, Container, FormControl, Stack, Text, FormLabel, Input, Flex, Checkbox, Button, FormErrorMessage, HStack, Box } from "@chakra-ui/react"
+import { Link } from "react-router-dom"
+import { Formik, Form, Field } from "formik";
+import { object, string, ref } from 'yup';
+import Card from "../../../components/Card";
+
+const SigninValidationSchema = object({
+    name: string().required("Name is required"),
+    surname: string().required("Surname is required"),
+    email: string().email("Email is invalid").required("Email is required"),
+    password: string().min(6, "Password must be atleast 6 characters").required("Password is required"),
+    confirmPassword: string().oneOf([ref("password"), null],"Passwords must match").required("Confirm your Password"),
+});
+
 
 const Signin = () => {
   return (
-    <div>
-        aa      
-    </div>
+    <Container bg="white">
+        <Center minH="100vh">
+            <Card>
+                <Text fontWeight="medium" textStyle="h1">Welcome to Crypto App</Text>
+                <Text textStyle="p2" color="black.60" mt="4">Enter Your credentials to access the account</Text>
+                <Formik
+                    initialValues={{
+                        email: "",
+                        password: "",
+                    }}
+                    
+                    onSubmit={(values) => {
+                            console.log (values);
+                        }}
+                    validationSchema={SigninValidationSchema}
+                    >
+                    {()=>(
+                    <Form>
+                        <Stack mt="10" spacing={6}>
+                            <Field name="email">
+                                    {({field, meta})=>(
+                                <FormControl isInvalid={!!(meta.error && meta.touched)}>
+                                        <FormLabel htmlFor= "email">Email</FormLabel>
+                                        <Input 
+                                        {...field}
+                                        name="email" type="email" placeholder="Enter your Email......."/>
+                                        <FormErrorMessage>{meta.error}</FormErrorMessage>
+                                </FormControl>
+                                    )}
+                            </Field>
+                            <Field name="password">
+                                    {({field, meta})=>(
+                                <FormControl isInvalid={!!(meta.error && meta.touched)}>
+                                        <FormLabel htmlFor= "password">Password</FormLabel>
+                                        <Input 
+                                        {...field}
+                                        name="password" type="password" placeholder="Type your Password......."/>
+                                        <FormErrorMessage>{meta.error}</FormErrorMessage>
+                                </FormControl>
+                                    )}
+                            </Field>
+                            <HStack justify="space-between">
+                              <Checkbox>
+                                  <Text textStyle="p3">    
+                                      Remember Me
+                                  </Text>
+                              </Checkbox>
+                              <Link to="/forgot-password">
+                                  <Text textStyle="p3" as="span" color="p.purple">
+                                      Forgot Password?
+                                  </Text>
+                              </Link>
+                            </HStack>
+                            <Box>
+                              <Button type="submit" w="full">
+                                  Login
+                              </Button>
+                              <Link to="/signup">
+                                  <Button w="full" mt="3" variant="outline">
+                                      Create New Account
+                                  </Button>
+                              </Link>
+                            </Box>
+                        </Stack>
+                    </Form>
+                    )}
+                </Formik>
+            </Card>
+        </Center>
+    </Container>
   )
 }
 
