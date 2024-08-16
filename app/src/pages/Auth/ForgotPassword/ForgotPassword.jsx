@@ -1,4 +1,4 @@
-import { Button, Center, Text, Stack, FormControl,FormLabel, FormErrorMessage, Input, Icon } from "@chakra-ui/react"
+import { Button, Center, Text, Stack, FormControl,FormLabel, FormErrorMessage, Input, Icon, Container } from "@chakra-ui/react"
 import Card from "../../../components/Card"
 import { Formik, Form, Field } from "formik";
 import { object, string, ref } from 'yup';
@@ -14,22 +14,23 @@ const ForgotPassword = () => {
 
 
   return (
-    <Center minH="100vh">
-        <Card>
-            <Link to="/signin">
-                <Icon as={AiOutlineArrowLeft} boxSize="6"/>
-            </Link>
-            <Text fontWeight="medium" textStyle="h1" mt={4}>Forgot Password</Text>
-            <Text textStyle="p2" color="black.60" mt="4">Enter Your Email address for which account you want to reset your password</Text>
-            <Formik
-                initialValues={{
+    <Container>
+        <Center minH="100vh">
+            <Card>
+                <Link to="/signin">
+                    <Icon as={AiOutlineArrowLeft} boxSize="6"/>
+                </Link>
+                <Text fontWeight="medium" textStyle="h1" mt={4}>Forgot Password</Text>
+                <Text textStyle="p2" color="black.60" mt="4">Enter Your Email address for which account you want to reset your password</Text>
+                <Formik
+                    initialValues={{
                     email: "",
                 }}
                     
-                onSubmit={(values) => {
-                        console.log (values);
-                    }}
-                validationSchema={ForgotValidationSchema}
+                    onSubmit={(values) => {
+                            console.log (values);
+                        }}
+                    validationSchema={ForgotValidationSchema}
                 >
                 {()=>(
                     <Form>
@@ -53,7 +54,8 @@ const ForgotPassword = () => {
                     )}
                 </Formik>
             </Card>
-    </Center>
+        </Center>
+    </Container>
   )
 }
 

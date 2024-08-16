@@ -1,29 +1,26 @@
 import { Button, Center, Container, Icon, Text, VStack } from "@chakra-ui/react"
 import Card from "../../../components/Card"
-import { MdEmail } from "react-icons/md";
+import { BsPatchCheckFill } from "react-icons/bs";
 
-const RegisterEmailVerify = () => {
+const ForgotPasswordSent = () => {
   return (
     <Container>
         <Center minH="100vh">
             <Card
             p={{
-                base: "4",
-                md: "10",
+            base: "4",
+            md: "10",
             }}
             showCard={true}
             >
                 <VStack spacing={6}>
-                <Icon as={MdEmail} boxSize="48px" color="p.purple"/>
+                <Icon as={BsPatchCheckFill} boxSize="48px" color="green"/>
                 <Text textStyle="h4" color="p.black" fontWeight="medium">
-                    Email Verifiction 
+                    Successfully Sent 
                 </Text>
                 <Text textStyle="p2" color="black.60" textAlign="center">
-                    We have sent you an Email Verifiction to <b>Jenny.Won@gmail.com</b>. If you didn't receive it, click the button below
+                    We have sent you some instructions on how to reset your password to {" "} <b>Jenny.Won@gmail.com</b>. {" "} Please follow the instructions from the email. We have sent you an email varifcation too {" "}.
                 </Text>
-                <Button variant="outline" w="full">
-                    Re-send Email
-                </Button>
                 </VStack>
             </Card>
         </Center>
@@ -31,4 +28,4 @@ const RegisterEmailVerify = () => {
   )
 }
 
-export default RegisterEmailVerify
+export default ForgotPasswordSent

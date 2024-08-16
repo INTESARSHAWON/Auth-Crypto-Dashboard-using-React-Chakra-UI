@@ -7,6 +7,7 @@ import TransactionPage from "./pages/Transaction/Transaction";
 import RegisterEmailVerify from "./pages/Auth/RegisterEmailVerify/RegisterEmailVerify";
 import RegisterSuccess from "./pages/Auth/RegisterSuccess/RegisterSuccess";
 import ForgotPassword from "./pages/Auth/ForgotPassword/ForgotPassword";
+import ForgotPasswordSent from "./pages/Auth/ForgotPasswordSent/ForgotPasswordSent";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/forgot-success",
+    element: <ForgotPasswordSent />,
   },
 ]);
 
