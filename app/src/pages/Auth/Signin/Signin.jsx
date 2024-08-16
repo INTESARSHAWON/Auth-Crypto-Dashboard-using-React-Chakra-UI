@@ -5,11 +5,8 @@ import { object, string, ref } from 'yup';
 import Card from "../../../components/Card";
 
 const SigninValidationSchema = object({
-    name: string().required("Name is required"),
-    surname: string().required("Surname is required"),
     email: string().email("Email is invalid").required("Email is required"),
     password: string().min(6, "Password must be atleast 6 characters").required("Password is required"),
-    confirmPassword: string().oneOf([ref("password"), null],"Passwords must match").required("Confirm your Password"),
 });
 
 
