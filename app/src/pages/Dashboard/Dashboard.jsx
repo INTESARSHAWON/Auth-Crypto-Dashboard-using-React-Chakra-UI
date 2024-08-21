@@ -16,7 +16,8 @@ const Dashboard = ({}) => {
   })
 
   if(exampleQuery.isLoading)
-    return <div>Loading...</div>;
+    return <div>Loading...</div>;  
+
 
 
   return (

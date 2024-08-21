@@ -1,8 +1,10 @@
-import { Center, Container, FormControl, Stack, Text, FormLabel, Input, Flex, Checkbox, Button, FormErrorMessage, HStack, Box } from "@chakra-ui/react"
+import { Center, Container, FormControl, Stack, Text, FormLabel, Input, Flex, Checkbox, Button, FormErrorMessage, HStack, Box, useToast } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 import { Formik, Form, Field } from "formik";
 import { object, string, ref } from 'yup';
 import Card from "../../../components/Card";
+import { useMutation } from "react-query";
+import { signinUser } from "../../../api/query/userQuery";
 
 const SigninValidationSchema = object({
     email: string().email("Email is invalid").required("Email is required"),
@@ -11,6 +13,29 @@ const SigninValidationSchema = object({
 
 
 const Signin = () => {
+    const toast = useToast();
+    const { mutate, isLoading, error, isError } = useMutation({
+        mutationKey: ["signin"],
+        mutationFn: signinUser,
+        onSuccess: (data) =>{},
+        onError: (data) => {
+            toast({
+                title: "Signin Error",
+                description: error.message,
+                status: "error",
+
+            })
+        }
+    })
+
+    // if (isError) {
+    //     return <Box>
+    //         {error.message}
+    //     </Box>
+    // }
+
+
+
   return (
     <Container bg="white">
         <Center minH="100vh">
@@ -25,6 +50,7 @@ const Signin = () => {
                     
                     onSubmit={(values) => {
                             console.log (values);
+                            mutate(values);
                         }}
                     validationSchema={SigninValidationSchema}
                     >
@@ -66,7 +92,7 @@ const Signin = () => {
                               </Link>
                             </HStack>
                             <Box>
-                              <Button type="submit" w="full">
+                              <Button isLoading={isLoading} type="submit" w="full">
                                   Login
                               </Button>
                               <Link to="/signup">
