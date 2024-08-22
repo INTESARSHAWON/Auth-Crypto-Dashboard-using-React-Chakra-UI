@@ -1,8 +1,12 @@
-import { Center, Container, FormControl, Stack, Text, FormLabel, Input, Flex, Checkbox, Button, FormErrorMessage } from "@chakra-ui/react"
-import { Link } from "react-router-dom"
+import { Center, Container, FormControl, Stack, Text, FormLabel, Input, Flex, Checkbox, Button, FormErrorMessage, useToast } from "@chakra-ui/react"
+import { Link, useNavigate } from "react-router-dom"
 import { Formik, Form, Field } from "formik";
 import { object, string, ref } from 'yup';
 import Card from "../../../components/Card";
+import { useMutation } from "react-query";
+import { signupUser } from "../../../api/query/userQuery";
+import { useState } from "react";
+
 
 const signupValidationSchema = object({
     name: string().required("Name is required"),
@@ -14,6 +18,34 @@ const signupValidationSchema = object({
 
 
 const Signup = () => {
+    const [email, setEmail] = useState(" ");
+    const navigate = useNavigate ();
+    const toast = useToast();
+    const { mutate ,isLoading } = useMutation({
+        mutationKey: ["signup"],
+        mutationFn: signupUser,
+        onSuccess: (data) =>{
+            console.log(email);
+            
+            if (email !== "") {
+                navigate("/register-email-verify",
+                    {
+                        state: {email},
+                    }
+                );
+            }
+        },
+        onError: (error) => {
+            toast({
+                title: "SignUp Error",
+                description: error.message,
+                status: "error",
+            });
+        },
+    });
+
+
+
   return (
     <Container>
         <Center minH="100vh">
@@ -30,7 +62,14 @@ const Signup = () => {
                     }}
                     
                     onSubmit={(values) => {
-                            console.log (values);
+                            // console.log (values);
+                            setEmail(values.email);
+                            mutate({
+                                firstName: values.name,
+                                lastName: values.surname,
+                                email: values.email,
+                                password: values.password,
+                            });
                         }}
                     validationSchema={signupValidationSchema}
                     >
@@ -99,7 +138,7 @@ const Signup = () => {
                                     I agree with {" "} <Text as="span" color="p.purple" >Terms & Conditions</Text>
                                 </Text>
                             </Checkbox>
-                            <Button type="submit">
+                            <Button isLoading={isLoading} type="submit">
                                 Create Account
                             </Button>
                             <Text textStyle="p3" color="black.60" textAlign="center">
