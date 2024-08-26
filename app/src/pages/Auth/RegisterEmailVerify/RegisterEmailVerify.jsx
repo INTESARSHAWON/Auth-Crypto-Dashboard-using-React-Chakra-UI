@@ -2,8 +2,9 @@ import { Button, Center, Container, Icon, Spinner, Text, useToast, VStack } from
 import Card from "../../../components/Card"
 import { MdEmail } from "react-icons/md";
 import { useLocation } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { sendVerificationMail } from "../../../api/query/userQuery";
+import { useEffect } from "react";
 
 const RegisterEmailVerify = () => {
     const toast = useToast();
@@ -17,10 +18,10 @@ const RegisterEmailVerify = () => {
             invalid email
         </Center>
     }
-    const { isSuccess, isLoading } = useQuery({
-        queryKey: ["send-verification-mail"],
-        queryFn: ()=> sendVerificationMail({email}),
-        onSuccess: (data) =>{
+    const { mutate, isSuccess, isLoading } = useMutation({
+        mutationKey: ["send-verification-mail"],
+        mutationFn: sendVerificationMail,
+        onSettled: (data) =>{
             console.log(data);
         },
         onError: (error) => {
@@ -34,17 +35,14 @@ const RegisterEmailVerify = () => {
         enabled: !!email,
     });
 
-    if (isLoading) {
-        <Center h="100vh">
-            <Spinner/>
-        </Center>
-    }
+    useEffect(()=>{
+        mutate({email});
+    }, [email]);
 
   return (
     <Container>
         <Center minH="100vh">
-            { 
-                isSuccess && (  
+            {/* {isSuccess && (   */}
             <Card
             p={{
                 base: "4",
@@ -60,12 +58,18 @@ const RegisterEmailVerify = () => {
                 <Text textStyle="p2" color="black.60" textAlign="center">
                     We have sent you an Email Verifiction to <b> {email} </b>. If you didn't receive it, click the button below
                 </Text>
-                <Button variant="outline" w="full">
+                <Button 
+                    variant="outline"
+                    w="full"
+                    onClick={ () => {
+                        mutate({email});
+                    }}
+                    isLoading={isLoading}>
                     Re-send Email
                 </Button>
                 </VStack>
             </Card>
-        )}
+        {/* )} */}
         </Center>
     </Container>
   )

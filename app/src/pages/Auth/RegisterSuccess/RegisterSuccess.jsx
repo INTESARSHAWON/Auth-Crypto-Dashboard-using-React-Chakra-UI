@@ -1,12 +1,44 @@
-import { Box, Button, Center, Container, Icon, Text, VStack } from "@chakra-ui/react"
+import { Box, Button, Center, Container, Icon, Spinner, Text, useToast, VStack } from "@chakra-ui/react"
 import Card from "../../../components/Card"
 import { BsPatchCheckFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { verifyEmailAddressSignup } from "../../../api/query/userQuery";
 
-const RegisterEmailVerify = () => {
+const RegisterSuccess = () => {
+    const toast = useToast();
+    const {token} = useParams();
+    // console.log(params);
+    const navigate = useNavigate();
+    
+    const { isSuccess, isLoading } = useQuery({
+        queryKey: ["verify-email-token"],
+        queryFn: ()=> verifyEmailAddressSignup({token}),
+        enabled: !!token,
+        onError: (error) => {
+            toast({
+                title: "SignUp Error",
+                description: error.message,
+                status: "error",
+            });
+
+            navigate("/signup");
+
+        },
+    });
+
+    if (isLoading) 
+        return(
+            <Center h="100vh">
+                <Spinner/>
+            </Center>
+        );
+    
+
   return (
     <Container>
         <Center minH="100vh">
+            { isSuccess && (
             <Card
             p={{
                 base: "4",
@@ -31,9 +63,10 @@ const RegisterEmailVerify = () => {
                 </Box>
                 </VStack>
             </Card>
+            )}
         </Center>
     </Container>
   )
 }
 
-export default RegisterEmailVerify
+export default RegisterSuccess

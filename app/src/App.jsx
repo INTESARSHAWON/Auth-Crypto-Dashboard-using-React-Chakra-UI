@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     element: <RegisterEmailVerify />,
   },
   {
-    path: "/register-success",
+    path: "/email-verify/:token",
     element: <RegisterSuccess />,
   },
   {
