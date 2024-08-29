@@ -1,8 +1,12 @@
 import { Button, Center, Container, Icon, Text, VStack } from "@chakra-ui/react"
 import Card from "../../../components/Card"
 import { BsPatchCheckFill } from "react-icons/bs";
+import { useParams } from "react-router-dom";
 
 const ForgotPasswordSent = () => {
+    const params = useParams();
+    const {email} = useParams();
+
   return (
     <Container>
         <Center minH="100vh">
@@ -19,7 +23,7 @@ const ForgotPasswordSent = () => {
                     Successfully Sent 
                 </Text>
                 <Text textStyle="p2" color="black.60" textAlign="center">
-                    We have sent you some instructions on how to reset your password to {" "} <b>Jenny.Won@gmail.com</b>. {" "} Please follow the instructions from the email. We have sent you an email varifcation too {" "}.
+                    We have sent you some instructions on how to reset your password to {" "} <b> {email} </b>. {" "} Please follow the instructions from the email. We have sent you an email varifcation too {" "}.
                 </Text>
                 </VStack>
             </Card>

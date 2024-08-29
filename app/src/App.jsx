@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     element: <ForgotPassword />,
   },
   {
-    path: "/forgot-success",
+    path: "/forgot-success/:email",
     element: <ForgotPasswordSent />,
   },
   {
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
     element: <ResetPasswordSuccess />,
   },
   {
-    path: "/reset-password",
+    path: "/forgot-password-verify/:token",
     element: <ResetPassword />,
   },
 ]);
