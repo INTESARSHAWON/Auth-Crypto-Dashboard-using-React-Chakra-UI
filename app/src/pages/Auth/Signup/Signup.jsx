@@ -28,11 +28,7 @@ const Signup = () => {
             console.log(email);
             
             if (email !== "") {
-                navigate("/register-email-verify",
-                    {
-                        state: {email},
-                    }
-                );
+                navigate(`/register-email-verify/${email}`);
             }
         },
         onError: (error) => {

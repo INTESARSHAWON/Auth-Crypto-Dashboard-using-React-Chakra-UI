@@ -1,17 +1,14 @@
 import { Button, Center, Container, Icon, Spinner, Text, useToast, VStack } from "@chakra-ui/react"
 import Card from "../../../components/Card"
 import { MdEmail } from "react-icons/md";
-import { useLocation } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import { useMutation } from "react-query";
 import { sendVerificationMail } from "../../../api/query/userQuery";
 import { useEffect } from "react";
 
 const RegisterEmailVerify = () => {
     const toast = useToast();
-    const location = useLocation();
-    const email = location.state?.email ?? "";
-    console.log(location);
-    
+    const { email } = useParams(); 
 
     if (email == "") {
         return <Center h="100vh">
