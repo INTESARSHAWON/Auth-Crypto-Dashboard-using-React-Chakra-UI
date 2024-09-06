@@ -5,6 +5,8 @@ import { object, string, ref } from 'yup';
 import Card from "../../../components/Card";
 import { useMutation } from "react-query";
 import { signinUser } from "../../../api/query/userQuery";
+import useAuth from "../../../hooks/useAuth";
+
 
 const SigninValidationSchema = object({
     email: string().email("Email is invalid").required("Email is required"),
@@ -14,10 +16,17 @@ const SigninValidationSchema = object({
 
 const Signin = () => {
     const toast = useToast();
-    const { mutate, isLoading, error, isError } = useMutation({
+    const { login } = useAuth();
+
+    const { mutate, isLoading } = useMutation({
         mutationKey: ["signin"],
         mutationFn: signinUser,
-        onSuccess: (data) =>{},
+        onSuccess: (data) =>{
+            const {token} = data;
+            if (token){
+                login(token);
+            }
+        },
         onError: (data) => {
             toast({
                 title: "Signin Error",
@@ -44,8 +53,8 @@ const Signin = () => {
                 <Text textStyle="p2" color="black.60" mt="4">Enter Your credentials to access the account</Text>
                 <Formik
                     initialValues={{
-                        email: "",
-                        password: "",
+                        email: "test11@gmail.com",
+                        password: "1234567",
                     }}
                     
                     onSubmit={(values) => {
