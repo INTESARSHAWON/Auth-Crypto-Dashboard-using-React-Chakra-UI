@@ -1,0 +1,7 @@
+1. React
+2. Chakra UI
+3. JS
+4. CSS
+
+
+This is a responsive crypto dashboard app created by React where I implemented authentication. There is a signin page, a signup page, along with a dashboard with transactions and support system. A user can sign in or sign out from the dashboard. Here I use Chakra UI as well.

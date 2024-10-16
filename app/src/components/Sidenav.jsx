@@ -40,9 +40,11 @@ const Sidenav = () => {
       h="100vh"
     >
       <Box>
+        <Link to={"/signin"}>
         <Heading textAlign="center" fontSize="20px" as="h1" pt="3.5rem">
-          @DOSOMECODING
+          @signin, if you aren't
         </Heading>
+        </Link>
         <Box mt="6" mx="3">
           {navLinks.map((nav) => (
             <Link to={nav.link} key={nav.text}>
